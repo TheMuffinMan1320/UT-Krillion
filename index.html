@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Longhorn Long Shot</title>
+  <meta name="description" content="A daily UT Austin trivia game where the rarer your answer, the higher you climb." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1 class="logo">Longhorn <span>Long Shot</span></h1>
+      <div class="stats" id="stats"></div>
+    </header>
+
+    <div class="layout">
+      <aside class="tower-wrap" aria-label="Tower progress">
+        <svg id="tower" viewBox="0 0 120 320" role="img" aria-labelledby="tower-title">
+          <title id="tower-title">Tower progress</title>
+          <defs>
+            <clipPath id="tower-clip">
+              <!-- base -->
+              <rect x="20" y="270" width="80" height="40" />
+              <!-- shaft -->
+              <rect x="34" y="90" width="52" height="182" />
+              <!-- belfry -->
+              <rect x="30" y="60" width="60" height="32" />
+              <!-- cupola -->
+              <rect x="42" y="36" width="36" height="26" />
+              <polygon points="44,36 60,10 76,36" />
+            </clipPath>
+          </defs>
+          <g clip-path="url(#tower-clip)">
+            <rect x="0" y="0" width="120" height="320" class="tower-empty" />
+            <rect id="tower-fill" x="0" y="310" width="120" height="0" class="tower-fill" />
+          </g>
+          <g class="tower-lines" fill="none">
+            <rect x="20" y="270" width="80" height="40" />
+            <rect x="34" y="90" width="52" height="182" />
+            <rect x="30" y="60" width="60" height="32" />
+            <rect x="42" y="36" width="36" height="26" />
+            <polygon points="44,36 60,10 76,36" />
+            <line x1="47" y1="110" x2="47" y2="262" />
+            <line x1="60" y1="110" x2="60" y2="262" />
+            <line x1="73" y1="110" x2="73" y2="262" />
+            <circle cx="60" cy="76" r="8" />
+          </g>
+        </svg>
+        <div class="height"><strong id="feet">0</strong> ft</div>
+        <div class="height-sub">of 307 ft</div>
+      </aside>
+
+      <section class="panel" id="screen"></section>
+    </div>
+
+    <footer class="foot">A fan-made trivia game. Not affiliated with The University of Texas at Austin.</footer>
+  </main>
+
+  <template id="tpl-home">
+    <div class="home">
+      <p class="lede">Seven prompts. One answer each. <strong>The rarer your answer, the higher you climb the Tower.</strong></p>
+      <ol class="rules">
+        <li>Each prompt is open-ended, like "Name a UT residence hall."</li>
+        <li>Type any correct answer before the 30-second clock runs out.</li>
+        <li>Obvious answers earn a little. Answers only a true Longhorn would think of earn a lot.</li>
+        <li>Reach the top of the Tower (700 points) to light it orange.</li>
+      </ol>
+      <div class="tier-key" id="tier-key"></div>
+      <div class="actions">
+        <button class="btn primary" id="btn-daily">Daily climb</button>
+        <button class="btn" id="btn-practice">Practice climb</button>
+      </div>
+      <p class="note" id="daily-note"></p>
+    </div>
+  </template>
+
+  <template id="tpl-question">
+    <div class="question">
+      <div class="q-meta">
+        <span class="q-count" id="q-count"></span>
+        <span class="q-cat" id="q-cat"></span>
+      </div>
+      <h2 class="q-prompt" id="q-prompt"></h2>
+      <div class="timer" aria-hidden="true"><div class="timer-bar" id="timer-bar"></div></div>
+      <div class="timer-text" id="timer-text"></div>
+      <form id="answer-form" autocomplete="off">
+        <input id="answer" type="text" placeholder="Your answer" aria-label="Your answer" maxlength="80" />
+        <div class="actions">
+          <button class="btn primary" type="submit">Lock it in</button>
+          <button class="btn ghost" type="button" id="btn-skip">Skip</button>
+        </div>
+      </form>
+    </div>
+  </template>
+
+  <template id="tpl-reveal">
+    <div class="reveal">
+      <div class="q-meta">
+        <span class="q-count" id="r-count"></span>
+        <span class="q-cat" id="r-cat"></span>
+      </div>
+      <h2 class="q-prompt" id="r-prompt"></h2>
+      <div class="verdict" id="verdict"></div>
+      <h3 class="others-title">Other answers on the board</h3>
+      <ul class="others" id="others"></ul>
+      <div class="actions">
+        <button class="btn primary" id="btn-next">Next</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-end">
+    <div class="end">
+      <h2 class="end-title" id="end-title"></h2>
+      <p class="end-score"><strong id="end-points"></strong> points · <strong id="end-feet"></strong> ft</p>
+      <div class="grid" id="end-grid"></div>
+      <ul class="summary" id="summary"></ul>
+      <div class="actions">
+        <button class="btn primary" id="btn-share">Copy result</button>
+        <button class="btn" id="btn-again">Practice climb</button>
+        <button class="btn ghost" id="btn-home">Home</button>
+      </div>
+      <p class="note" id="share-note"></p>
+    </div>
+  </template>
+
+  <script src="questions.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
